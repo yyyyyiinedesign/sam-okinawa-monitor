@@ -1,9 +1,9 @@
 name: SAM 沖縄通知
 
 on:
+  workflow_dispatch:   # 手動実行
   schedule:
-    - cron: '0 0 * * *'  # 毎日UTC0時（日本時間朝9時）
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # 毎日UTC0時（日本9時）
 
 jobs:
   notify:
@@ -12,3 +12,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Pythonスクリプト実行
         run: python3 notify.py
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SAM_API_KEY: ${{ secrets.SAM_API_KEY }}
