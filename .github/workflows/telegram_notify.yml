@@ -1,0 +1,14 @@
+name: SAM 沖縄通知
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # 毎日UTC0時（日本時間朝9時）
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pythonスクリプト実行
+        run: python3 notify.py
