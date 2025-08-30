@@ -19,12 +19,16 @@ def fetch_sam_data():
     params = {
         "api_key": SAM_API_KEY,
         "q": "Okinawa OR Kadena",  # 検索ワード
-        "postedFrom": "2023-01-01",  # 古いデータを避けるため適当な開始日
+        "postedFrom": "2023-01-01",  # 過去データの開始日
         "limit": 10
     }
     r = requests.get(url, params=params)
     print("SAM API status:", r.status_code)
-    data = r.json()
+    try:
+        data = r.json()
+    except Exception as e:
+        print("JSON取得失敗:", e)
+        data = {}
     results = []
     for item in data.get("opportunitiesData", []):
         results.append({
@@ -38,4 +42,5 @@ def fetch_sam_data():
 # === 新しいデータを取得 ===
 new_data = fetch_sam_data()
 
-# === 過去データを読
+# デバッグ出力：取得データを表示
+print("取得した案件データ:", n
